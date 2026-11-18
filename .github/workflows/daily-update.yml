@@ -1,0 +1,29 @@
+name: Daily GitHub Activity
+
+on:
+  schedule:
+    - cron: '17 16 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Update activity log
+        run: |
+          echo "Automated check-in: $(date -u)" >> activity-log.md
+
+      - name: Commit and push
+        run: |
+          git config user.name "chriskunda"
+          git config user.email "177358631+chriskunda@users.noreply.github.com"
+          git add activity-log.md
+          git commit -m "Daily automated update"
+          git push
