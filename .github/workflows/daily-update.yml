@@ -16,14 +16,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Update activity log
-        run: |
-          echo "Automated check-in: $(date -u)" >> activity-log.md
-
-      - name: Commit and push
+      - name: Configure Git
         run: |
           git config user.name "chriskunda"
           git config user.email "177358631+chriskunda@users.noreply.github.com"
+
+      - name: Update activity log
+        run: |
+          echo "Daily learning update: $(date -u)" >> activity-log.md
+
+      - name: Commit and push
+        run: |
           git add activity-log.md
-          git commit -m "Daily automated update"
+          git commit -m "Daily activity update"
           git push
